@@ -2,7 +2,7 @@
 library(shiny)
 library(EMD) # Lena's image
 library(blockmatrix) # For creating block matrices
-library(ggplot2) # Graphics
+library(ggplot2)
 
 # Loading data ----
 data(lena) # Storage the image

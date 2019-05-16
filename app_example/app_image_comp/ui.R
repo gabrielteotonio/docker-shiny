@@ -1,4 +1,4 @@
-fluidPage(    
+ui <- fluidPage(    
   
   titlePanel("Image Compression - PCA"),
   
@@ -15,6 +15,5 @@ fluidPage(
     mainPanel(
       plotOutput("imgPlot")  
     )
-    
   )
 )

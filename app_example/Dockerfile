@@ -7,17 +7,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN R -e "install.packages('tidyverse')"
-
+RUN R -e "install.packages('shiny')"
+RUN R -e "install.packages('EMD')"
+RUN R -e "install.packages('blockmatrix')"
 
 RUN rm -rf /srv/shiny-server/*
 
-COPY . /srv/shiny-server
+COPY ./app_image_comp /srv/shiny-server
 
-#volume for Shiny Apps and static assets. Here is the folder for index.html (link) and sample apps.
-#VOLUME /srv/shiny-server
-
-# to allow access from outside of the container to the container service
-# at the ports to allow access from firewall if accessing from outside the server. 
 EXPOSE 3838
 
 # Use baseimage-docker's init system.

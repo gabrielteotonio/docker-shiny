@@ -1,4 +1,4 @@
-function(input, output) {
+server <- function(input, output) {
   
   output$imgPlot <- renderPlot({
     img <- compression(PCA$x, PCA$eigenvectors, input$n_pc)

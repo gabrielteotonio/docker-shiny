@@ -9,10 +9,10 @@ RUN R -e "options(repos = \
   install.packages('tidyr'); \
   install.packages('dplyr');"
   
-COPY my_analysis.R /home/analysis/my_analysis.R
+COPY my_analysis.R /home/analysis
 
 RUN mkdir /home/results
 
 CMD cd /home/analysis \
   && R -e "source('my_analysis.R')" \
-  && mv /home/analysis/pop_per_country.csv /home/results/pop_per_country.csv
+  && mv /home/analysis/pop_per_country.csv /home/results/pop_per_country.csv 
