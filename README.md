@@ -3,8 +3,8 @@
 </p>
 
 
-## Fist things first  
-Joing the [Rstudio community](https://community.rstudio.com/) and share the knowledge!  
+## First things first!  
+Join the [Rstudio community](https://community.rstudio.com/) and share the knowledge!  
 
 ## 1. Installing Docker
 
@@ -49,6 +49,7 @@ Rstudio is the IDE for most of R users and we can also run it using Docker!
 ```
 docker run -e USER=fisher -e PASSWORD=kolmogorov --rm -d -p 8787:8787 rocker/rstudio:3.5.2
 ```
+The ```-e``` creates environment variables. Here, we have created the credentials to acess the Rstudio server.  
 
 ### Running your analysis inside a container
 
@@ -134,10 +135,41 @@ After build the image using another tag, run the container with the ```-v``` fla
 docker run --rm -v /home/gabriel.teotonio/Documents/code/docker-shiny/analysis_example/results:/home/results gabrielteotonio/analysis:0.2
 ```
 
+Previously we have ran a container with Rstudio, now you can add a volume to that structure to save your analysis results when finished as we did with R container.  
+
 ## 3. Shiny app and Docker
 
-Reliability is our main objective when we deploy services in production. Imagine you are working on an analysis in R and you send your code to a friend. Your friend runs exactly this code on exactly the same dataset but receives a slightly different result. This can have various reasons such as a different operating system or a different version of an R package. A solution for this problem is Docker!  
-Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. In a way, Docker is a bit like a virtual machine. But unlike a virtual machine, rather than creating a whole virtual operating system, Docker allows applications to use the same Linux kernel as the system that they're running on and only requires applications be shipped with things not already running on the host computer. This gives a significant performance boost and reduces the size of the application. Using docker is a great way to deploy a Shiny application.
+Reliability is one of our main objectives when we deploy services in production. We can face a lot of problems when deploying our applications. In the Shiny app case, in particular, similar analysis can lead to slightly different results. As we saw, Docker is a solution for this problem.  
+For this tutorial, consider the app bellow.  
+
+<img src="https://drive.google.com/uc?export=view&id=1vjq3voir3r9NScVs1EtA9xHxqE7Z3oVL" alt="drawing" width="500"/>
+
+The brings PCA (Principal Component Anaysis) for image compression. We can see how the compression is performated for different numbers of principal components.  
+The dockerfile:
+
+```
+FROM quantumobject/docker-shiny
+
+RUN apt-get update \ 
+    && apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libpq-dev \
+    && apt-get clean \
+    && rm -rf /tmp/* /var/tmp/*  \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN R -e "install.packages('tidyverse')"
+RUN R -e "install.packages('shiny')"
+RUN R -e "install.packages('EMD')"
+RUN R -e "install.packages('blockmatrix')"
+
+RUN rm -rf /srv/shiny-server/*
+
+COPY ./app_image_comp /srv/shiny-server
+
+EXPOSE 3838
+
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"] 
+```
 
 ## Go further and make more: some references for your journey using Shiny  
 - [Rstudio articles](https://shiny.rstudio.com/articles/)  
@@ -147,3 +179,4 @@ Docker is a tool designed to make it easier to create, deploy, and run applicati
 - [Shiny in production book](https://kellobri.github.io/shiny-prod-book/)  
 - [Best practices database connections in Shiny apps](https://db.rstudio.com/best-practices/dashboards)
 - [Database using dplyr](https://db.rstudio.com/dplyr/)
+- [Shiny cheat sheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
