@@ -1,5 +1,5 @@
 <p float="middle">
-<img src="https://drive.google.com/uc?export=view&id=1w5GsJJNpJMSzQ667jPYseFRzlNI6325-" alt="drawing" width="450"/>
+<img src="https://drive.google.com/uc?export=view&id=1w5GsJJNpJMSzQ667jPYseFRzlNI6325-" alt="drawing" height="500" width="550" align="center" />
 </p>
 
 
@@ -14,10 +14,10 @@ sudo apt-get install docker.io
 sudo dnf installl docker
 ``` 
 ### Mac os
-See the following guide: ![Mac installation](https://docs.docker.com/v17.12/docker-for-mac/install/)
+See the following guide: [Mac installation](https://docs.docker.com/v17.12/docker-for-mac/install/)
 
 ### Windows
-See the following guide: ![Windows installation](https://runnable.com/docker/install-docker-on-windows-10)
+See the following guide: [Windows installation](https://runnable.com/docker/install-docker-on-windows-10)
 
 ## 2. Share your code analysis
 Code reproducibility is a great bottleneck in many ways. Can be when you want to share your work with a colleague or a journal editor is trying to reproduce your results to make sure you did well. 
