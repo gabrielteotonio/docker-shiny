@@ -1,5 +1,5 @@
 <p float="middle">
-<img src="https://drive.google.com/uc?export=view&id=1w5GsJJNpJMSzQ667jPYseFRzlNI6325-" alt="drawing" height="500" width="550" align="center" />
+<img src="https://drive.google.com/uc?export=view&id=1w5GsJJNpJMSzQ667jPYseFRzlNI6325-" alt="drawing" height="480" width="580" align="middle" />
 </p>
 
 
@@ -93,13 +93,47 @@ CMD cd /home/analysis \
 As you can see, we do some commands in the Dockerfile to make possible our analysis to run.  
 In ```FROM rocker/r-ver:3.5.3``` we defined from which image we are going to build ours over. The ```ARG``` creates a environment variable, and with this we hav created the variable ```WHEN``` that will set the date for getting the packages from R cran.  
 Now we create a directory in the container system where we are going to copy our analysis file. As this container is a new process that just started and the image we used as base only brings a OS based on debian and R installed, we have to install the packages that are required in ```my_analysis.R```.  
-Once we have all the requirements installed, let's copy our ```my_analysis.R``` to container and finally run it!
+Once we have all the requirements installed, let's copy our ```my_analysis.R``` to container and finally build it!  
+The following command builds our image using the Docker file as a template of instructions.    
+```
+docker build --build-arg WHEN=2019-05-29 -t gabrielteotonio/analysis:0.1 .
+```
+Let's run a container using this image we have created:  
+```
+docker run --rm --name=my_analysis gabrielteotonio/analysis
+```
+
+Awesome! You just run your analysis in a isolated environment. But almost surely you will want to have the results of your analysis, i.e. outside your container, to see how it was performated. To solve it, we need to create a folder inside the container that will be persisted to another folder in the host machine. For this, we use the flag ```-v``` when running the container, with ```/path/from/host:/path/in/conatiner``` that will map the folder inside the container to the folder on host machine.  
+The Dockerfile needs to be updated to create a folder to put the results of ```my_analysis.R``` .  
 
 ```
-docker run --rm -v /home/gabriel.teotonio/Documents/code/docker-shiny/analysis_example/results:/home/results gabrielteotonio/analysis:0.1
+FROM rocker/r-ver:3.5.3
+
+ARG WHEN
+
+RUN mkdir /home/analysis
+
+RUN R -e "options(repos = \
+  list(CRAN = 'https://mran.revolutionanalytics.com/snapshot/${WHEN}')); \
+  install.packages('tidyr'); \
+  install.packages('dplyr');"
+  
+COPY my_analysis.R /home/analysis
+
+RUN mkdir /home/results
+
+CMD cd /home/analysis \
+  && R -e "source('my_analysis.R')" \
+  && mv /home/analysis/pop_per_country.csv /home/results/pop_per_country.csv 
+```
+After build the image using another tag, run the container with the ```-v``` flag mapping the folders.  
+```
+docker run --rm -v /home/gabriel.teotonio/Documents/code/docker-shiny/analysis_example/results:/home/results gabrielteotonio/analysis:0.2
 ```
 
 ## 3. Shiny app and Docker
 
 Reliability is our main objective when we deploy services in production. Imagine you are working on an analysis in R and you send your code to a friend. Your friend runs exactly this code on exactly the same dataset but receives a slightly different result. This can have various reasons such as a different operating system or a different version of an R package. A solution for this problem is Docker!  
 Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. In a way, Docker is a bit like a virtual machine. But unlike a virtual machine, rather than creating a whole virtual operating system, Docker allows applications to use the same Linux kernel as the system that they're running on and only requires applications be shipped with things not already running on the host computer. This gives a significant performance boost and reduces the size of the application. Using docker is a great way to deploy a Shiny application.
+
+## Go further and make more: some references for your journey using Shiny  
