@@ -1,7 +1,10 @@
 <p float="middle">
-<img src="https://drive.google.com/uc?export=view&id=1w5GsJJNpJMSzQ667jPYseFRzlNI6325-" alt="drawing" height="480" width="580" align="middle" />
+<img src="https://drive.google.com/uc?export=view&id=1w5GsJJNpJMSzQ667jPYseFRzlNI6325-" alt="drawing" height="480" width="620" align="middle" />
 </p>
 
+
+## Fist things first  
+Joing the [Rstudio community](https://community.rstudio.com/) and share the knowledge!  
 
 ## 1. Installing Docker
 
@@ -100,7 +103,7 @@ docker build --build-arg WHEN=2019-05-29 -t gabrielteotonio/analysis:0.1 .
 ```
 Let's run a container using this image we have created:  
 ```
-docker run --rm --name=my_analysis gabrielteotonio/analysis
+docker run --rm --name=my_analysis gabrielteotonio/analysis:0.1
 ```
 
 Awesome! You just run your analysis in a isolated environment. But almost surely you will want to have the results of your analysis, i.e. outside your container, to see how it was performated. To solve it, we need to create a folder inside the container that will be persisted to another folder in the host machine. For this, we use the flag ```-v``` when running the container, with ```/path/from/host:/path/in/conatiner``` that will map the folder inside the container to the folder on host machine.  
@@ -137,3 +140,10 @@ Reliability is our main objective when we deploy services in production. Imagine
 Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. In a way, Docker is a bit like a virtual machine. But unlike a virtual machine, rather than creating a whole virtual operating system, Docker allows applications to use the same Linux kernel as the system that they're running on and only requires applications be shipped with things not already running on the host computer. This gives a significant performance boost and reduces the size of the application. Using docker is a great way to deploy a Shiny application.
 
 ## Go further and make more: some references for your journey using Shiny  
+- [Rstudio articles](https://shiny.rstudio.com/articles/)  
+- [curso-r material (PT)](https://www.curso-r.com/material/shiny/)  
+- [Shinydashboard layout tutorial](https://rstudio.github.io/shinydashboard/)  
+- [Docker: get started](https://docs.docker.com/get-started/)  
+- [Shiny in production book](https://kellobri.github.io/shiny-prod-book/)  
+- [Best practices database connections in Shiny apps](https://db.rstudio.com/best-practices/dashboards)
+- [Database using dplyr](https://db.rstudio.com/dplyr/)
