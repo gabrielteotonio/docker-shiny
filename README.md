@@ -144,7 +144,7 @@ For this tutorial, consider the app bellow.
 
 <img src="https://drive.google.com/uc?export=view&id=1vjq3voir3r9NScVs1EtA9xHxqE7Z3oVL" alt="drawing" width="500"/>
 
-The brings PCA (Principal Component Anaysis) for image compression. We can see how the compression is performated for different numbers of principal components.  
+The app brings PCA (Principal Component Anaysis) for image compression. We can see how the compression is performated for different numbers of principal components.  
 The dockerfile:
 
 ```
@@ -171,12 +171,20 @@ EXPOSE 3838
 CMD ["/sbin/my_init"] 
 ```
 
+The Dockerfile follows the same structure as analysis example. The ```FROM quantumobject/docker-shiny``` defined from which image we are going to build ours over. The ```RUN``` command below install some dependencies necessaries for R packages. As we did previously, the installation of R packages is done by ```RUN R -e```.  In ```EXPOSE 3838```, we say to container which port it'll publish the app.  
+
+Let's build!  
+```docker build -t gabrielteotonio/app:0.1 .```  
+
+Running the container:  
+```docker run --rm -d -p 3838:3838 gabrielteotonio/app:0.1```
+
 ## Go further and make more: some references for your journey using Shiny  
 - [Rstudio articles](https://shiny.rstudio.com/articles/)  
 - [curso-r material (PT)](https://www.curso-r.com/material/shiny/)  
 - [Shinydashboard layout tutorial](https://rstudio.github.io/shinydashboard/)  
 - [Docker: get started](https://docs.docker.com/get-started/)  
 - [Shiny in production book](https://kellobri.github.io/shiny-prod-book/)  
-- [Best practices database connections in Shiny apps](https://db.rstudio.com/best-practices/dashboards)
-- [Database using dplyr](https://db.rstudio.com/dplyr/)
+- [Best practices database connections in Shiny apps](https://db.rstudio.com/best-practices/dashboards)  
+- [Database using dplyr](https://db.rstudio.com/dplyr/)  
 - [Shiny cheat sheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
