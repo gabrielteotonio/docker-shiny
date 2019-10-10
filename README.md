@@ -1,8 +1,3 @@
-<p float="middle">
-<img src="https://drive.google.com/uc?export=view&id=1w5GsJJNpJMSzQ667jPYseFRzlNI6325-" alt="drawing" height="480" width="620" align="middle" />
-</p>
-
-
 ## First things first!  
 Join the [Rstudio community](https://community.rstudio.com/) and share the knowledge!  
 
@@ -37,8 +32,6 @@ The options selected:
 ```rm```: automatically remove the container when it exits;  
 ```name```: assign a name to the container;  
 ```it```: create a interactive terminal to acess the container.  
-
-<img src="https://drive.google.com/uc?export=view&id=1mpQFZ-xxc2u50sbvluXqH-QE5qh9BQ-e" alt="drawing" width="500"/>
 
 Now you have R running in your terminal without do installation of R into your machine.  
 
@@ -140,9 +133,7 @@ Previously we have ran a container with Rstudio, now you can add a volume to tha
 ## 3. Shiny app and Docker
 
 Reliability is one of our main objectives when we deploy services in production. We can face a lot of problems when deploying our applications. In the Shiny app case, in particular, similar analysis can lead to slightly different results. As we saw, Docker is a solution for this problem.  
-For this tutorial, consider the app bellow.  
-
-<img src="https://drive.google.com/uc?export=view&id=1vjq3voir3r9NScVs1EtA9xHxqE7Z3oVL" alt="drawing" width="500"/>
+For this tutorial, consider the image compression app.  
 
 The app brings PCA (Principal Component Anaysis) for image compression. We can see how the compression is performated for different numbers of principal components.  
 The dockerfile:
